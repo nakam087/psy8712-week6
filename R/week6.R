@@ -20,6 +20,6 @@ citations_tbl <-tibble(line=1:length(citations_txt), cite=citations_txt)%>%
   mutate(page_start=str_extract(cite, pattern="\\d+(?=-\\d+)"))%>%
   mutate(perf_ref=str_detect(cite,pattern=regex("performance", ignore_case=T)))%>% #can you also use "(?i)performance" here?
   mutate(title=str_match(cite, pattern= "\\)\\.\\s*([^\\.]+[\\.?!])")[,2])%>%# I used chatGPT to help me with these, but they still don't work...
-  mutate(first_author=str_match(cite, pattern="\\*?(([A-Z][a-z]+,?\\s[A-Z](?:\\.\\s?[A-Z])?\\.?))")[,2]) #still some NA's but I gave up
+  mutate(first_author=str_match(cite, pattern="^\\*?(([A-Z][a-z]+,?\\s[A-Z](?:\\.\\s?[A-Z])?\\.?))")[,2]) #still some NA's but I gave up
 
 print(sum(!is.na(citations_tbl$first_author))) #is over 30000,but it's still not all of them...some are lacking a first author as well and my code might be over-generous here
